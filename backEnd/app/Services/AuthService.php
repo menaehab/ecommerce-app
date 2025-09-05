@@ -40,9 +40,13 @@ class AuthService
         ];
     }
 
-    public function logout()
+    public function logout($user, bool $allDevices = false)
     {
-        Auth::user()->currentAccessToken()->delete();
+        if ($allDevices) {
+            $user->tokens()->delete();
+        } else {
+            $user->currentAccessToken()->delete();
+        }
     }
 }
 
