@@ -21,7 +21,7 @@ class ApiExceptionHandler
             if ($e instanceof \Illuminate\Validation\ValidationException) {
                 return response()->json([
                     'success' => false,
-                    'message' => $e->errors(),
+                    'errors' => $e->errors(),
                 ], 422);
             }
 

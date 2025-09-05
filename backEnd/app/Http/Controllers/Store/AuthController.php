@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Store;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\AuthService;
+use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AuthResource;
 use App\Http\Requests\Store\RegisterRequest;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -28,5 +30,26 @@ class AuthController extends Controller
                 'token' => $data['token']
             ])
         ], 201);
+    }
+
+    public function login(LoginRequest $request)
+    {
+        $data = $this->authService->login($request->validated());
+
+        if (!$data) {
+            return response()->json([
+                'success' => false,
+                'message' => 'email or password is incorrect',
+            ], 422);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User logged in successfully',
+            'data' => new AuthResource([
+                'user' => $data['user'],
+                'token' => $data['token']
+            ])
+        ], 200);
     }
 }
