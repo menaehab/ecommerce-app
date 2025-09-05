@@ -24,7 +24,6 @@ class AuthService
         ];
     }
 
-
     public function login(array $data)
     {
         if (!Auth::attempt($data)) {
@@ -39,6 +38,11 @@ class AuthService
             'user' => $user,
             'token' => $token
         ];
+    }
+
+    public function logout()
+    {
+        Auth::user()->currentAccessToken()->delete();
     }
 }
 
