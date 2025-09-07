@@ -1,34 +1,49 @@
 import api from '../../api/api';
-import { register, login, logout } from './AuthSlice';
+import { register, login, logout, setError } from './AuthSlice';
+import { useSelector } from 'react-redux';
 
 // Register user
 export const registerUser = (userData) => async (dispatch) => {
   try {
-    await api.get('/register');
     const response = await api.post('/register', userData);
-    dispatch(register(response.data.user));
+    const userWithToken = { ...response.data.user, token: response.data.token };
+    dispatch(register(userWithToken));
+    return userWithToken;
   } catch (error) {
-    console.error(error.response.data);
+    const payload = error?.response?.data?.errors || error.message;
+    dispatch(setError(payload));
+    return payload;
   }
 };
 
 // Login user
 export const loginUser = (userData) => async (dispatch) => {
   try {
-    await api.get('/login');
     const response = await api.post('/login', userData);
-    dispatch(login(response.data.user));
+    const userWithToken = { ...response.data.user, token: response.data.token };
+    dispatch(login(userWithToken));
+    return userWithToken;
   } catch (error) {
-    console.error(error.response.data);
+    const payload = error?.response?.data?.errors || error.message;
+    dispatch(setError(payload));
+    return payload;
   }
 };
 
 // Logout user
 export const logoutUser = () => async (dispatch) => {
   try {
-    await api.post('/logout');
+    const token = useSelector((state) => state.auth.token);
+    await api.post('/logout',{}, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
     dispatch(logout());
+    return true;
   } catch (error) {
-    console.error(error.response.data);
+    const payload = error?.response?.data?.errors || error.message;
+    dispatch(setError(payload));
+    return false;
   }
 };
