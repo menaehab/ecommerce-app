@@ -11,8 +11,8 @@ export default function Breadcrumb({ paths, pageName }) {
         <Link
           className="cursor-pointer"
           underline="hover"
-          color="inherit"
           component={RouterLink}
+          color="primary"
           to="/"
         >
           Home

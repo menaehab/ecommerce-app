@@ -39,7 +39,7 @@ export default function Navbar() {
   };
 
   return (
-    <AppBar position="static" color='#fff'>
+    <AppBar elevation={1} position="static" color='#fff'>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <img className='hidden md:block' src="/Logo.png" alt="" />
