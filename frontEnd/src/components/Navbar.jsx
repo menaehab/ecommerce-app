@@ -42,7 +42,7 @@ export default function Navbar() {
     <AppBar position="static" color='#fff'>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <img className='hidden md:block' src="../../public/Logo.png" alt="" />
+          <img className='hidden md:block' src="/Logo.png" alt="" />
           <Typography
             variant="h6"
             noWrap
@@ -94,7 +94,7 @@ export default function Navbar() {
               ))}
             </Menu>
           </Box>
-          <img className='md:hidden block' src="../../public/Logo.png" alt="" />
+          <img className='md:hidden block' src="/Logo.png" alt="" />
           <Typography
             variant="h5"
             noWrap
