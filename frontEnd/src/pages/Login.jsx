@@ -10,10 +10,10 @@ import Stack from '@mui/material/Stack'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 
-export default function Register() {
+export default function Login() {
   return (
     <Container className="my-6" maxWidth="xl">
-      <Breadcrumb paths={[]} pageName="Register" />
+      <Breadcrumb paths={[]} pageName="Login" />
 
       <Container 
         maxWidth="sm" 
@@ -31,7 +31,7 @@ export default function Register() {
               gutterBottom 
               sx={{ fontWeight: "bold", color: "primary.main" }}
             >
-              Create Account
+              Login
             </Typography>
             <Typography 
               variant="body2" 
@@ -39,26 +39,11 @@ export default function Register() {
               color="text.secondary" 
               gutterBottom
             >
-              Please fill in the form to register
+              Please fill in the form to login
             </Typography>
 
             <form>
               <Stack spacing={2.5} mt={3}>
-                <TextField
-                  label="Full Name"
-                  type="text"
-                  fullWidth
-                  variant="outlined"
-                  size="medium"
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      borderRadius: "12px",
-                      "&:hover fieldset": {
-                        borderColor: "primary.main",
-                      },
-                    },
-                  }}
-                />
                 <TextField
                   label="Email"
                   type="email"
@@ -89,21 +74,6 @@ export default function Register() {
                     },
                   }}
                 />
-                <TextField
-                  label="Confirm Password"
-                  type="password"
-                  fullWidth
-                  variant="outlined"
-                  size="medium"
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      borderRadius: "12px",
-                      "&:hover fieldset": {
-                        borderColor: "primary.main",
-                      },
-                    },
-                  }}
-                />
                 <Button 
                   type="submit" 
                   variant="contained" 
@@ -111,7 +81,7 @@ export default function Register() {
                   size="large"
                   sx={{ borderRadius: "12px", py: 1.2, fontWeight: "bold" }}
                 >
-                  Register
+                  Login
                 </Button>
               </Stack>
             </form>
@@ -122,7 +92,7 @@ export default function Register() {
               gutterBottom
               sx={{ mt: 2 }}
             >
-              Don't have an account? <Link color='primary' underline='hover' component={RouterLink} to="/login">Login</Link>
+              Do have an account? <Link color='primary' underline='hover' component={RouterLink} to="/register">Register</Link>
             </Typography>
           </CardContent>
         </Card>
