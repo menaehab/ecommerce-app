@@ -9,9 +9,9 @@ import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
-import { useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux'
-import { registerUser } from '../features/auth/AuthThunk'
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '../features/auth/AuthThunk';
+import { setError } from '../features/auth/AuthSlice'
 import { useNavigate } from 'react-router-dom'
 export default function Register() {
   const dispatch = useDispatch();
@@ -44,11 +44,10 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    try {
-      await dispatch(registerUser(formData));
-    } finally {
-      setLoading(false);
-    }
+    // Clear previous errors
+    dispatch(setError(null));
+    await dispatch(registerUser(formData));
+    setLoading(false);
   };
   return (
     <Container className="my-6" maxWidth="xl">

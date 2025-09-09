@@ -9,8 +9,45 @@ import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../features/auth/AuthThunk';
+import { setError } from '../features/auth/AuthSlice'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
+
+  React.useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user,navigate]);
+
+  const [formData, setFormData] = React.useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const [loading, setLoading] = React.useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    // Clear previous errors
+    dispatch(setError(null));
+    await dispatch(loginUser(formData));
+    setLoading(false);
+  };
+
   return (
     <Container className="my-6" maxWidth="xl">
       <Breadcrumb paths={[]} pageName="Login" />
@@ -42,7 +79,7 @@ export default function Login() {
               Please fill in the form to login
             </Typography>
 
-            <form>
+            <form onSubmit={handleSubmit}>
               <Stack spacing={2.5} mt={3}>
                 <TextField
                   label="Email"
@@ -50,6 +87,9 @@ export default function Login() {
                   fullWidth
                   variant="outlined"
                   size="medium"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       borderRadius: "12px",
@@ -65,6 +105,9 @@ export default function Login() {
                   fullWidth
                   variant="outlined"
                   size="medium"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       borderRadius: "12px",
@@ -80,8 +123,9 @@ export default function Login() {
                   fullWidth 
                   size="large"
                   sx={{ borderRadius: "12px", py: 1.2, fontWeight: "bold" }}
+                  disabled={loading}
                 >
-                  Login
+                  {loading ? "Loading..." : "Login"}
                 </Button>
               </Stack>
             </form>

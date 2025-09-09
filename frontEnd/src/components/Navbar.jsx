@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../features/auth/AuthThunk';
 import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 export default function Navbar() {
 
@@ -27,7 +28,6 @@ export default function Navbar() {
   const user = useSelector((state) => state.auth.user);
 
   const pages = ['Products', 'Pricing', 'Blog'];
-  const settings = user ? ['Profile', 'Account', 'Dashboard', ] : ['Login', 'Register'];
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -164,11 +164,14 @@ export default function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography color='#000' sx={{ textAlign: 'center' }}>{setting}</Typography>
+              {!user ? [
+                <MenuItem key="login" onClick={handleCloseUserMenu}>
+                  <Typography component={RouterLink} to="/login" color='#000' sx={{ textAlign: 'center', textDecoration: 'none' }}>Login</Typography>
+                </MenuItem>,
+                <MenuItem key="register" onClick={handleCloseUserMenu}>
+                  <Typography component={RouterLink} to="/register" color='#000' sx={{ textAlign: 'center', textDecoration: 'none' }}>Register</Typography>
                 </MenuItem>
-              ))}
+              ] : null}
               {user && (
                 <MenuItem onClick={handleLogout}>
                   <Typography color='#000' sx={{ textAlign: 'center' }}>Logout</Typography>
