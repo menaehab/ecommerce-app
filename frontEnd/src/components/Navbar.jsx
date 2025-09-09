@@ -14,14 +14,29 @@ import MenuItem from '@mui/material/MenuItem';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Badge from '@mui/material/Badge';
 import SearchIcon from '@mui/icons-material/Search';
-
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../features/auth/AuthThunk';
+import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 export default function Navbar() {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const user = useSelector((state) => state.auth.user);
+
+  const pages = ['Products', 'Pricing', 'Blog'];
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [cartItemCount] = React.useState(2); 
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    navigate('/login');
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -149,11 +164,19 @@ export default function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography color='#000' sx={{ textAlign: 'center' }}>{setting}</Typography>
+              {!user ? [
+                <MenuItem key="login" onClick={handleCloseUserMenu}>
+                  <Typography component={RouterLink} to="/login" color='#000' sx={{ textAlign: 'center', textDecoration: 'none' }}>Login</Typography>
+                </MenuItem>,
+                <MenuItem key="register" onClick={handleCloseUserMenu}>
+                  <Typography component={RouterLink} to="/register" color='#000' sx={{ textAlign: 'center', textDecoration: 'none' }}>Register</Typography>
                 </MenuItem>
-              ))}
+              ] : null}
+              {user && (
+                <MenuItem onClick={handleLogout}>
+                  <Typography color='#000' sx={{ textAlign: 'center' }}>Logout</Typography>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
         </Toolbar>
