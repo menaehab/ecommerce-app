@@ -11,12 +11,12 @@ use App\Http\Resources\AuthResource;
 use App\Http\Requests\Store\RegisterRequest;
 use Illuminate\Validation\ValidationException;
 
-class AuthController extends Controller
+class UserAuthController extends Controller
 {
     protected $authService;
-    public function __construct(AuthService $authService)
+    public function __construct()
     {
-        $this->authService = $authService;
+        $this->authService = new AuthService(User::class);
     }
     public function register(RegisterRequest $request)
     {
@@ -55,7 +55,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        $this->authService->logout(auth()->user());
+        $this->authService->logout();
 
         return response()->json([
             'success' => true,
