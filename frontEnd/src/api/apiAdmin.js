@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { logout } from '../features/store/auth/UserAuthSlice';
+import { logout } from '../features/dashboard/auth/AdminAuthSlice';
 
 // Create axios instance without interceptors first
 const apiAdmin = axios.create({
@@ -20,9 +20,9 @@ export const injectStore = (_store) => {
   // Add request interceptor to include the auth token
   apiAdmin.interceptors.request.use(
     (config) => {
-      const { token } = store.getState().auth;
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+      const { adminToken } = store.getState().adminAuth;
+      if (adminToken) {
+        config.headers.Authorization = `Bearer ${adminToken}`;
       }
       return config;
     },

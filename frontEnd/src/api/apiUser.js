@@ -20,9 +20,9 @@ export const injectStore = (_store) => {
   // Add request interceptor to include the auth token
   apiUser.interceptors.request.use(
     (config) => {
-      const { token } = store.getState().auth;
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+      const { userToken } = store.getState().userAuth || {};
+      if (userToken) {
+        config.headers.Authorization = `Bearer ${userToken}`;
       }
       return config;
     },

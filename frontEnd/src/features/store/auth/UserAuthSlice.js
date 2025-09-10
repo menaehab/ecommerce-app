@@ -8,7 +8,7 @@ const getStoredAuth = () => {
   
     try {
       user = storedUser ? JSON.parse(storedUser) : null;
-    } catch (e) {
+    } catch {
       user = null;
       Cookies.remove("user");
     }
@@ -29,17 +29,17 @@ const authSlice = createSlice({
     reducers: {
         register: (state, action) => {
             state.user = action.payload.user;
-            state.userToken = action.payload.token;
+            state.userToken = action.payload.userToken;
             state.error = null;
             Cookies.set("user", JSON.stringify(action.payload.user));
-            Cookies.set("user-token", action.payload.token);
+            Cookies.set("user-token", action.payload.userToken);
         },
         login: (state, action) => {
             state.user = action.payload.user;
-            state.userToken = action.payload.token;
+            state.userToken = action.payload.userToken;
             state.error = null;
             Cookies.set("user", JSON.stringify(action.payload.user));
-            Cookies.set("user-token", action.payload.token);
+            Cookies.set("user-token", action.payload.userToken);
         },
         logout: (state) => {
             state.user = null;

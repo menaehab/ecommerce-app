@@ -8,6 +8,7 @@ import StoreLayout from './components/layouts/StoreLayout'
 import DashboardLayout from './components/layouts/DashboardLayout'
 import Dashboard from './pages/dashboard/Dashboard'
 import AdminLogin from './pages/dashboard/AdminLogin'
+import AdminRoute from './routes/AdminRoute'
 function App() {
   return (
     <>
@@ -17,9 +18,9 @@ function App() {
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
       </Route>
-      <Route path="/dashboard/login" element={<PublicRoute><AdminLogin /></PublicRoute>} />
+      <Route path="/dashboard/login" element={<AdminLogin />} />
       <Route path="/dashboard" element={<DashboardLayout />} >
-        <Route index element={<Dashboard />} />
+        <Route index element={<AdminRoute><Dashboard /></AdminRoute>} />
       </Route>
     </Routes>
     </>

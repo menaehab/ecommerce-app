@@ -25,7 +25,7 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.userAuth.user);
 
   const pages = ['Products', 'Pricing', 'Blog'];
 

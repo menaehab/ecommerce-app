@@ -2,23 +2,23 @@ import { createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 
 const getStoredAuth = () => {
-    let user = null;
-    const storedUser = Cookies.get("admin");
+    let admin = null;
+    const storedAdmin = Cookies.get("admin");
     const adminToken = Cookies.get("admin-token") || null;
   
     try {
-      user = storedUser ? JSON.parse(storedUser) : null;
-    } catch (e) {
-      user = null;
+      admin = storedAdmin ? JSON.parse(storedAdmin) : null;
+    } catch {
+      admin = null;
       Cookies.remove("admin");
     }
   
-    return { user, adminToken };
+    return { admin, adminToken };
   };
   
 
 const initialState = {
-    user: getStoredAuth().user,
+    admin: getStoredAuth().admin,
     adminToken: getStoredAuth().adminToken,
     error: null,
 };
@@ -28,14 +28,14 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         login: (state, action) => {
-            state.user = action.payload.user;
-            state.adminToken = action.payload.token;
+            state.admin = action.payload.admin;
+            state.adminToken = action.payload.adminToken;
             state.error = null;
-            Cookies.set("admin", JSON.stringify(action.payload.user));
-            Cookies.set("admin-token", action.payload.token);
+            Cookies.set("admin", JSON.stringify(action.payload.admin));
+            Cookies.set("admin-token", action.payload.adminToken);
         },
         logout: (state) => {
-            state.user = null;
+            state.admin = null;
             state.adminToken = null;
             state.error = null;
             Cookies.remove("admin");
