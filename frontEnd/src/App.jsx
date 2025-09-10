@@ -1,24 +1,25 @@
 import './App.css'
-import Navbar from './components/store/Navbar'
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/store/Home'
 import Register from './pages/store/Register'
 import Login from './pages/store/Login'
-import Footer from './components/store/Footer'
-// import PrivateRoute from './routes/PrivateRoute'
 import PublicRoute from './routes/PublicRoute'
+import StoreLayout from './components/StoreLayout'
+import DashboardLayout from './components/DashboardLayout'
+import Dashboard from './pages/dashboard/Dashboard'
 function App() {
- 
-
   return (
     <>
-    <Navbar />
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-      <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+      <Route path="/" element={<StoreLayout />}>
+        <Route index element={<Home />} />
+        <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+        <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+      </Route>
+      <Route path="/dashboard" element={<DashboardLayout />} >
+        <Route index element={<Dashboard />} />
+      </Route>
     </Routes>
-    <Footer />
     </>
   )
 }
