@@ -8,8 +8,8 @@ import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../features/store/auth/AuthThunk';
-import { setError } from '../../features/store/auth/AuthSlice'
+import { loginAdmin } from '../../features/dashboard/auth/AdminAuthThunk';
+import { setError } from '../../features/dashboard/auth/AdminAuthSlice'
 import { useNavigate } from 'react-router-dom'
 
 export default function AdminLogin() {
@@ -42,7 +42,7 @@ export default function AdminLogin() {
     setLoading(true);
     // Clear previous errors
     dispatch(setError(null));
-    await dispatch(loginUser(formData));
+    await dispatch(loginAdmin(formData));
     setLoading(false);
   };
 

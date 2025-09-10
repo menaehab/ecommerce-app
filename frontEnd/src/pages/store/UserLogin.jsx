@@ -10,8 +10,8 @@ import Stack from '@mui/material/Stack'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../features/store/auth/AuthThunk';
-import { setError } from '../../features/store/auth/AuthSlice'
+import { loginUser } from '../../features/store/auth/UserAuthThunk';
+import { setError } from '../../features/store/auth/UserAuthSlice'
 import { useNavigate } from 'react-router-dom'
 
 export default function UserLogin() {

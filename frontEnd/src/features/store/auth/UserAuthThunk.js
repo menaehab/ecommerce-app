@@ -1,11 +1,11 @@
-import api from '../../../api/api';
-import { register, login, logout, setError } from './AuthSlice';
+import apiUser from '../../../api/apiUser';
+import { register, login, logout, setError } from './UserAuthSlice';
 
 // Register user
 export const registerUser = (userData) => async (dispatch) => {
   try {
-    const { data } = await api.post('/register', userData);
-    dispatch(register({ user: data.data.user, token: data.data.token }));
+    const { data } = await apiUser.post('/register', userData);
+    dispatch(register({ user: data.data.user, userToken: data.data.token }));
   } catch (error) {
     const payload = error?.response?.data?.errors || error.message;
     dispatch(setError(payload));
@@ -16,8 +16,8 @@ export const registerUser = (userData) => async (dispatch) => {
 // Login user
 export const loginUser = (userData) => async (dispatch) => {
   try {
-    const { data } = await api.post('/login', userData);
-    dispatch(login({ user: data.data.user, token: data.data.token }));
+    const { data } = await apiUser.post('/login', userData);
+    dispatch(login({ user: data.data.user, userToken: data.data.token }));
   } catch (error) {
     const payload = error?.response?.data?.errors || error.message;
     dispatch(setError(payload));
@@ -27,11 +27,11 @@ export const loginUser = (userData) => async (dispatch) => {
 // Logout user
 export const logoutUser = () => async (dispatch, getState) => {
   try {
-    const { token } = getState().auth;
-    if (token) {
-      await api.post('/logout', {}, {
+    const { userToken } = getState().auth;
+    if (userToken) {
+      await apiUser.post('/logout', {}, {
         headers: {
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${userToken}`,
           'Accept': 'application/json',
         }
       });
