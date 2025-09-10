@@ -4,22 +4,15 @@ import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import Badge from '@mui/material/Badge'
 import MenuItem from '@mui/material/MenuItem'
 import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
-import AccountCircle from '@mui/icons-material/AccountCircle'
-import MailIcon from '@mui/icons-material/Mail'
-import NotificationsIcon from '@mui/icons-material/Notifications'
+import Button from '@mui/material/Button'
 
 export default function Navbar({ onMenuClick }) {
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   const isMenuOpen = Boolean(anchorEl)
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
 
   const handleMenuClose = () => {
     setAnchorEl(null)
@@ -47,7 +40,6 @@ export default function Navbar({ onMenuClick }) {
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'white',color: 'black' }}
       >
         <Toolbar>
-          {/* drawer toggle button */}
           <IconButton
             size="large"
             edge="start"
@@ -68,29 +60,12 @@ export default function Navbar({ onMenuClick }) {
           >
             Tech 
           </Typography>
-
-          {/* extra icons */}
-          {/* <IconButton size="large" color="inherit">
-            <Badge badgeContent={4} color="error">
-              <MailIcon />
-            </Badge>
-          </IconButton>
-          <IconButton size="large" color="inherit">
-            <Badge badgeContent={17} color="error">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton> */}
-          <IconButton
-            size="large"
-            edge="end"
-            aria-label="account"
-            aria-controls={menuId}
-            aria-haspopup="true"
-            onClick={handleProfileMenuOpen}
+          <Button
             color="inherit"
+            sx={{ ml: 2, fontWeight: 'bold' }}
           >
-            <AccountCircle />
-          </IconButton>
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
       {renderMenu}

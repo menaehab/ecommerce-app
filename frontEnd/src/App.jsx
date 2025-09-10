@@ -1,11 +1,11 @@
-import './App.css'
+import './styles/App.css'
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/store/Home'
 import Register from './pages/store/Register'
 import Login from './pages/store/Login'
 import PublicRoute from './routes/PublicRoute'
-import StoreLayout from './components/StoreLayout'
-import DashboardLayout from './components/DashboardLayout'
+import StoreLayout from './components/layouts/StoreLayout'
+import DashboardLayout from './components/layouts/DashboardLayout'
 import Dashboard from './pages/dashboard/Dashboard'
 function App() {
   return (
