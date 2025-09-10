@@ -14,7 +14,7 @@ import { loginUser } from '../../features/store/auth/AuthThunk';
 import { setError } from '../../features/store/auth/AuthSlice'
 import { useNavigate } from 'react-router-dom'
 
-export default function Login() {
+export default function UserLogin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
@@ -50,11 +50,11 @@ export default function Login() {
 
   return (
     <Container className="my-6" maxWidth="xl">
-      <Breadcrumb paths={[]} pageName="Login" />
+      {/* <Breadcrumb paths={[]} pageName="Login" /> */}
 
       <Container 
         maxWidth="sm" 
-        className="h-[calc(100vh-140px)] flex items-center justify-center"
+        className="h-[calc(100vh-173px)] flex items-center justify-center"
       >
         <Card 
           elevation={4} 

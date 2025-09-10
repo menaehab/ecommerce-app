@@ -2,11 +2,12 @@ import './styles/App.css'
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/store/Home'
 import Register from './pages/store/Register'
-import Login from './pages/store/Login'
+import Login from './pages/store/UserLogin'
 import PublicRoute from './routes/PublicRoute'
 import StoreLayout from './components/layouts/StoreLayout'
 import DashboardLayout from './components/layouts/DashboardLayout'
 import Dashboard from './pages/dashboard/Dashboard'
+import AdminLogin from './pages/dashboard/AdminLogin'
 function App() {
   return (
     <>
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
       </Route>
+      <Route path="/dashboard/login" element={<PublicRoute><AdminLogin /></PublicRoute>} />
       <Route path="/dashboard" element={<DashboardLayout />} >
         <Route index element={<Dashboard />} />
       </Route>
