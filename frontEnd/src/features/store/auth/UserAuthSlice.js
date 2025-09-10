@@ -4,22 +4,22 @@ import Cookies from "js-cookie";
 const getStoredAuth = () => {
     let user = null;
     const storedUser = Cookies.get("user");
-    const token = Cookies.get("token") || null;
+    const userToken = Cookies.get("user-token") || null;
   
     try {
       user = storedUser ? JSON.parse(storedUser) : null;
-    } catch (e) {
+    } catch {
       user = null;
       Cookies.remove("user");
     }
   
-    return { user, token };
+    return { user, userToken };
   };
   
 
 const initialState = {
     user: getStoredAuth().user,
-    token: getStoredAuth().token,
+    userToken: getStoredAuth().userToken,
     error: null,
 };
 
@@ -29,24 +29,24 @@ const authSlice = createSlice({
     reducers: {
         register: (state, action) => {
             state.user = action.payload.user;
-            state.token = action.payload.token;
+            state.userToken = action.payload.userToken;
             state.error = null;
             Cookies.set("user", JSON.stringify(action.payload.user));
-            Cookies.set("token", action.payload.token);
+            Cookies.set("user-token", action.payload.userToken);
         },
         login: (state, action) => {
             state.user = action.payload.user;
-            state.token = action.payload.token;
+            state.userToken = action.payload.userToken;
             state.error = null;
             Cookies.set("user", JSON.stringify(action.payload.user));
-            Cookies.set("token", action.payload.token);
+            Cookies.set("user-token", action.payload.userToken);
         },
         logout: (state) => {
             state.user = null;
-            state.token = null;
+            state.userToken = null;
             state.error = null;
             Cookies.remove("user");
-            Cookies.remove("token");
+            Cookies.remove("user-token");
         },
         setError: (state, action) => {
             state.error = action.payload;

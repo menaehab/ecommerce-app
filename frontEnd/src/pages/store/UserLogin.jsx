@@ -10,14 +10,15 @@ import Stack from '@mui/material/Stack'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../features/store/auth/AuthThunk';
-import { setError } from '../../features/store/auth/AuthSlice'
+import { loginUser } from '../../features/store/auth/UserAuthThunk';
+import { setError } from '../../features/store/auth/UserAuthSlice'
 import { useNavigate } from 'react-router-dom'
 
 export default function UserLogin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.userAuth.user);
+  const errors = useSelector((state) => state.userAuth.error);
 
   React.useEffect(() => {
     if (user) {
@@ -42,9 +43,12 @@ export default function UserLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // Clear previous errors
     dispatch(setError(null));
-    await dispatch(loginUser(formData));
+    
+    const result = await dispatch(loginUser(formData));
+    if (result?.success) {
+      navigate("/");
+    }
     setLoading(false);
   };
 
@@ -90,6 +94,8 @@ export default function UserLogin() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  error={!!errors?.email}
+                  helperText={errors?.email ? errors?.email[0] : ""}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       borderRadius: "12px",
@@ -108,6 +114,8 @@ export default function UserLogin() {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
+                  error={!!errors?.password}
+                  helperText={errors?.password ? errors?.password[0] : ""}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       borderRadius: "12px",

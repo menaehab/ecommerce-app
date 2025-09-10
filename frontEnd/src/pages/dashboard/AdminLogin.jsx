@@ -8,20 +8,21 @@ import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../features/store/auth/AuthThunk';
-import { setError } from '../../features/store/auth/AuthSlice'
+import { loginAdmin } from '../../features/dashboard/auth/AdminAuthThunk';
+import { setError } from '../../features/dashboard/auth/AdminAuthSlice'
 import { useNavigate } from 'react-router-dom'
 
 export default function AdminLogin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const admin = useSelector((state) => state.auth.admin);
+  const adminAuth = useSelector((state) => state.adminAuth);
+  const errors = useSelector((state) => state.adminAuth.error);
 
   React.useEffect(() => {
-    if (admin) {
-      navigate("/");
+    if (adminAuth.admin) {
+      navigate("/dashboard");
     }
-  }, [admin,navigate]);
+  }, [adminAuth, navigate]);
 
   const [formData, setFormData] = React.useState({
     email: "",
@@ -40,10 +41,18 @@ export default function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // Clear previous errors
     dispatch(setError(null));
-    await dispatch(loginUser(formData));
-    setLoading(false);
+    
+    try {
+      const result = await dispatch(loginAdmin(formData));
+      if (result?.success) {
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -86,6 +95,8 @@ export default function AdminLogin() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  error={!!errors?.email}
+                  helperText={errors?.email ? errors?.email[0] : ""}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       borderRadius: "12px",
@@ -104,6 +115,8 @@ export default function AdminLogin() {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
+                  error={!!errors?.password}
+                  helperText={errors?.password ? errors?.password[0] : ""}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       borderRadius: "12px",

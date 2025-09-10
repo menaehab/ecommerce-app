@@ -16,7 +16,7 @@ import Badge from '@mui/material/Badge';
 import SearchIcon from '@mui/icons-material/Search';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { logoutUser } from '../../features/store/auth/AuthThunk';
+import { logoutUser } from '../../features/store/auth/UserAuthThunk';
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -25,7 +25,7 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.userAuth.user);
 
   const pages = ['Products', 'Pricing', 'Blog'];
 

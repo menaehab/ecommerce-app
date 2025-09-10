@@ -10,13 +10,13 @@ import Stack from '@mui/material/Stack'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from '../../features/store/auth/AuthThunk';
-import { setError } from '../../features/store/auth/AuthSlice'
+import { registerUser } from '../../features/store/auth/UserAuthThunk';
+import { setError } from '../../features/store/auth/UserAuthSlice'
 import { useNavigate } from 'react-router-dom'
 export default function Register() {
   const dispatch = useDispatch();
-  const errors = useSelector((state) => state.auth.error);
-  const user = useSelector((state) => state.auth.user);
+  const errors = useSelector((state) => state.userAuth.error);
+  const user = useSelector((state) => state.userAuth.user);
   const navigate = useNavigate();
   React.useEffect(() => {
     if (user) {
@@ -44,7 +44,6 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // Clear previous errors
     dispatch(setError(null));
     await dispatch(registerUser(formData));
     setLoading(false);
@@ -79,7 +78,6 @@ export default function Register() {
             >
               Please fill in the form to register
             </Typography>
-
             <form onSubmit={handleSubmit}>
               <Stack spacing={2.5} mt={3}>
                 <TextField

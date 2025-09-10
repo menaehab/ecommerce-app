@@ -8,11 +8,22 @@ import MenuItem from '@mui/material/MenuItem'
 import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
 import Button from '@mui/material/Button'
+import { logoutAdmin } from '../../features/dashboard/auth/AdminAuthThunk'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 export default function Navbar({ onMenuClick }) {
-  const [anchorEl, setAnchorEl] = React.useState(null)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const [anchorEl, setAnchorEl] = React.useState(null)
   const isMenuOpen = Boolean(anchorEl)
+
+  const handleLogout = () => {
+    console.log("test");
+    dispatch(logoutAdmin());
+    navigate('/');
+  }
 
   const handleMenuClose = () => {
     setAnchorEl(null)
@@ -29,7 +40,7 @@ export default function Navbar({ onMenuClick }) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
   )
 
@@ -61,6 +72,7 @@ export default function Navbar({ onMenuClick }) {
             Tech 
           </Typography>
           <Button
+            onClick={handleLogout}
             color="inherit"
             sx={{ ml: 2, fontWeight: 'bold' }}
           >
