@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { logout } from '../features/auth/AuthSlice';
+import { logout } from '../features/store/auth/AuthSlice';
 
 // Create axios instance without interceptors first
 const api = axios.create({

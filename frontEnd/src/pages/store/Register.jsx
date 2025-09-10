@@ -1,5 +1,5 @@
 import React from 'react'
-import Breadcrumb from '../components/Breadcrumb'
+import Breadcrumb from '../../components/Breadcrumb'
 import Container from '@mui/material/Container'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
@@ -10,25 +10,29 @@ import Stack from '@mui/material/Stack'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@mui/material/Link'
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../features/auth/AuthThunk';
-import { setError } from '../features/auth/AuthSlice'
+import { registerUser } from '../../features/store/auth/AuthThunk';
+import { setError } from '../../features/store/auth/AuthSlice'
 import { useNavigate } from 'react-router-dom'
-
-export default function Login() {
+export default function Register() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const errors = useSelector((state) => state.auth.error);
   const user = useSelector((state) => state.auth.user);
-
+  const navigate = useNavigate();
   React.useEffect(() => {
     if (user) {
       navigate("/");
     }
   }, [user,navigate]);
 
+
   const [formData, setFormData] = React.useState({
+    name: "",
     email: "",
     password: "",
+    password_confirmation: "",
   });
+
+  const [loading, setLoading] = React.useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -37,24 +41,21 @@ export default function Login() {
     });
   };
 
-  const [loading, setLoading] = React.useState(false);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     // Clear previous errors
     dispatch(setError(null));
-    await dispatch(loginUser(formData));
+    await dispatch(registerUser(formData));
     setLoading(false);
   };
-
   return (
     <Container className="my-6" maxWidth="xl">
-      <Breadcrumb paths={[]} pageName="Login" />
+      {/* <Breadcrumb paths={[]} pageName="Register" /> */}
 
       <Container 
         maxWidth="sm" 
-        className="h-[calc(100vh-140px)] flex items-center justify-center"
+        className="h-[calc(100vh-173px)] flex items-center justify-center"
       >
         <Card 
           elevation={4} 
@@ -68,7 +69,7 @@ export default function Login() {
               gutterBottom 
               sx={{ fontWeight: "bold", color: "primary.main" }}
             >
-              Login
+              Create Account
             </Typography>
             <Typography 
               variant="body2" 
@@ -76,20 +77,17 @@ export default function Login() {
               color="text.secondary" 
               gutterBottom
             >
-              Please fill in the form to login
+              Please fill in the form to register
             </Typography>
 
             <form onSubmit={handleSubmit}>
               <Stack spacing={2.5} mt={3}>
                 <TextField
-                  label="Email"
-                  type="email"
+                  label="Full Name"
+                  type="text"
                   fullWidth
                   variant="outlined"
                   size="medium"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       borderRadius: "12px",
@@ -98,6 +96,31 @@ export default function Login() {
                       },
                     },
                   }}
+                  value={formData.name}
+                  onChange={handleChange}
+                  name="name"
+                  error={!!errors?.name}
+                  helperText={errors?.name ? errors?.name[0] : ""}
+                />
+                <TextField
+                  label="Email"
+                  type="email"
+                  fullWidth
+                  variant="outlined"
+                  size="medium"
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "12px",
+                      "&:hover fieldset": {
+                        borderColor: "primary.main",
+                      },
+                    },
+                  }}
+                  value={formData.email}
+                  onChange={handleChange}
+                  name="email"
+                  error={!!errors?.email}
+                  helperText={errors?.email ? errors?.email[0] : ""}
                 />
                 <TextField
                   label="Password"
@@ -105,9 +128,6 @@ export default function Login() {
                   fullWidth
                   variant="outlined"
                   size="medium"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       borderRadius: "12px",
@@ -116,6 +136,31 @@ export default function Login() {
                       },
                     },
                   }}
+                  value={formData.password}
+                  onChange={handleChange}
+                  name="password"
+                  error={!!errors?.password}
+                  helperText={errors?.password ? errors?.password[0] : ""}
+                />
+                <TextField
+                  label="Confirm Password"
+                  type="password"
+                  fullWidth
+                  variant="outlined"
+                  size="medium"
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "12px",
+                      "&:hover fieldset": {
+                        borderColor: "primary.main",
+                      },
+                    },
+                  }}
+                  value={formData.password_confirmation}
+                  onChange={handleChange}
+                  name="password_confirmation"
+                  error={!!errors?.password_confirmation}
+                  helperText={errors?.password_confirmation ? errors?.password_confirmation[0] : ""}
                 />
                 <Button 
                   type="submit" 
@@ -125,7 +170,7 @@ export default function Login() {
                   sx={{ borderRadius: "12px", py: 1.2, fontWeight: "bold" }}
                   disabled={loading}
                 >
-                  {loading ? "Loading..." : "Login"}
+                  {loading ? "Loading..." : "Register"}
                 </Button>
               </Stack>
             </form>
@@ -136,7 +181,7 @@ export default function Login() {
               gutterBottom
               sx={{ mt: 2 }}
             >
-              Do have an account? <Link color='primary' underline='hover' component={RouterLink} to="/register">Register</Link>
+              Don't have an account? <Link color='primary' underline='hover' component={RouterLink} to="/login">Login</Link>
             </Typography>
           </CardContent>
         </Card>

@@ -1,4 +1,4 @@
-import api from '../../api/api';
+import api from '../../../api/api';
 import { register, login, logout, setError } from './AuthSlice';
 
 // Register user
