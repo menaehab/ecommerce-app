@@ -1,5 +1,5 @@
 import apiAdmin from '../../../api/apiAdmin';
-import { createCategory, setCategory, updateCategory, deleteCategory, setError } from './AdminCategorySlice';
+import { createCategory, setCategory, showCategory, updateCategory, deleteCategory, setError } from './AdminCategorySlice';
 
 export const fetchCategoriesThunk = (page = 1) => async (dispatch) => {
   try {
@@ -21,11 +21,21 @@ export const createCategoryThunk = (categoryData) => async (dispatch) => {
   }
 };
 
+export const fetchCategoryThunk = (slug) => async (dispatch) => {
+  try {
+    const { data } = await apiAdmin.get(`/categories/${slug}`);
+    dispatch(showCategory(data.data));
+    return { success: true };
+  } catch (error) {
+    return handleError(error, dispatch);
+  }
+};
+
 export const updateCategoryThunk = (categoryData) => async (dispatch) => {
   try {
-    const { data } = await apiAdmin.put(`/categories/${categoryData.slug}`, categoryData);
+    const { data } = await apiAdmin.put(`/categories/${categoryData.slug}`, { name: categoryData.name });
     dispatch(updateCategory(data.data));
-    return { success: true };
+    return { success: true, payload: data.data };
   } catch (error) {
     return handleError(error, dispatch);
   }
@@ -43,9 +53,7 @@ export const deleteCategoryThunk = (categoryData) => async (dispatch) => {
 
 // Helper to handle errors
 const handleError = (error, dispatch) => {
-  const payload = error?.response?.data?.errors ||
-                  error?.response?.data?.message ||
-                  error.message;
+  const payload = error?.response?.data?.errors;
   dispatch(setError(payload));
   return { success: false, error: payload };
 };

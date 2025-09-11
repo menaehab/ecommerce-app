@@ -11,7 +11,7 @@ import Stack from "@mui/material/Stack";
 import DeleteModal from "../../../components/DeleteModal";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategoriesThunk } from "../../../features/dashboard/categories/AdminCategoryThunk";
-import { Link as RouterLink } from "react-router-dom";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 import TablePagination from "@mui/material/TablePagination";
 
 const columns = [
@@ -29,6 +29,7 @@ export default function CategoryHome() {
   const [open, setOpen] = React.useState(false);
   const [selectedCategory, setSelectedCategory] = React.useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const categories = useSelector((state) => state.category.categories);
   const pagination = useSelector((state) => state.category.pagination);
 
@@ -67,8 +68,8 @@ export default function CategoryHome() {
       <Button to="create" component={RouterLink} sx={{ mb: 2 }} variant="contained">
         Add Category
       </Button>
-      <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        <TableContainer sx={{ maxHeight: 440 }}>
+      <Paper sx={{ width: "100%", overflow: "hidden"}}>
+        <TableContainer sx={{ maxHeight: 600 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
@@ -99,7 +100,7 @@ export default function CategoryHome() {
                               variant="contained"
                               size="small"
                               color="warning"
-                              onClick={() => console.log("Edit", row.slug)}
+                              onClick={() => navigate(`/dashboard/categories/update/${row.slug}`)}
                             >
                               Edit
                             </Button>

@@ -12,6 +12,7 @@ import UserPublicRoute from './routes/store/UserPublicRoute'
 import AdminPublicRoute from './routes/dashboard/AdminPublicRoute'
 import CategoryHome from './pages/dashboard/categories/CategoryHome'
 import CategoryCreate from './pages/dashboard/categories/CategoryCreate'
+import CategoryUpdate from './pages/dashboard/categories/CategoryUpdate'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route index element={<AdminPrivateRoute><Dashboard /></AdminPrivateRoute>} />
         <Route path="categories" element={<AdminPrivateRoute><CategoryHome /></AdminPrivateRoute>} />
         <Route path="categories/create" element={<AdminPrivateRoute><CategoryCreate /></AdminPrivateRoute>} />
+        <Route path="categories/update/:slug" element={<AdminPrivateRoute><CategoryUpdate /></AdminPrivateRoute>} />
       </Route>
     </Routes>
     </>
