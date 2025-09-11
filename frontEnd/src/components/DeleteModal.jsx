@@ -18,7 +18,11 @@ const style = {
   p: 4,
 };
 
-export default function DeleteModal({ open, handleClose,label, name }) {
+export default function DeleteModal({ open, handleClose,label, record, onDelete }) {
+  const handleDelete = () => {
+    onDelete(record);
+    handleClose();
+  };
   return (
     <Modal
       open={open}
@@ -43,7 +47,7 @@ export default function DeleteModal({ open, handleClose,label, name }) {
             color="text.secondary"
             sx={{ mb: 3 }}
           >
-            Are you sure you want to delete {name}? This action cannot be
+            Are you sure you want to delete {record?.name}? This action cannot be
             undone.
           </Typography>
 
@@ -51,7 +55,7 @@ export default function DeleteModal({ open, handleClose,label, name }) {
             <Button variant="outlined" color="secondary" onClick={handleClose}>
               Cancel
             </Button>
-            <Button variant="contained" color="error" onClick={handleClose}>
+            <Button variant="contained" color="error" onClick={handleDelete}>
               Delete
             </Button>
           </Stack>

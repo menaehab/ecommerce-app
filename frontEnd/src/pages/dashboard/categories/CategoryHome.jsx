@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCategoriesThunk } from "../../../features/dashboard/categories/AdminCategoryThunk";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import TablePagination from "@mui/material/TablePagination";
+import { deleteCategoryThunk } from "../../../features/dashboard/categories/AdminCategoryThunk";
 
 const columns = [
   { id: "index", label: "#", minWidth: 50, align: "left" },
@@ -37,6 +38,10 @@ export default function CategoryHome() {
     dispatch(fetchCategoriesThunk(newPage + 1));
   };
 
+  const handleDelete = (categoryData) => {
+    dispatch(deleteCategoryThunk(categoryData));
+  };
+
   React.useEffect(() => {
     const fetchData = async () => {
       await dispatch(fetchCategoriesThunk());
@@ -45,8 +50,8 @@ export default function CategoryHome() {
     fetchData();
   }, [dispatch]);
 
-  const handleOpen = (categoryName) => {
-    setSelectedCategory(categoryName);
+  const handleOpen = (category) => {
+    setSelectedCategory(category);
     setOpen(true);
   };
 
@@ -60,8 +65,9 @@ export default function CategoryHome() {
       <DeleteModal
         open={open}
         handleClose={handleClose}
-        name={selectedCategory}
+        record={selectedCategory}
         label="Category"
+        onDelete={handleDelete}
       />
 
       <h1 className="text-5xl mb-10 text-center font-bold">Categories</h1>
@@ -108,7 +114,7 @@ export default function CategoryHome() {
                               variant="contained"
                               size="small"
                               color="error"
-                              onClick={() => handleOpen(row.name)}
+                              onClick={() => handleOpen(row)}
                             >
                               Delete
                             </Button>
