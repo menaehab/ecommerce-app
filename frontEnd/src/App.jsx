@@ -10,6 +10,7 @@ import AdminLogin from './pages/dashboard/AdminLogin'
 import AdminPrivateRoute from './routes/dashboard/AdminPrivateRoute'
 import UserPublicRoute from './routes/store/UserPublicRoute'
 import AdminPublicRoute from './routes/dashboard/AdminPublicRoute'
+import CategoryHome from './pages/dashboard/categories/CategoryHome'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route path="/dashboard/login" element={<AdminPublicRoute><AdminLogin /></AdminPublicRoute>} />
       <Route path="/dashboard" element={<DashboardLayout />} >
         <Route index element={<AdminPrivateRoute><Dashboard /></AdminPrivateRoute>} />
+        <Route path="categories" element={<AdminPrivateRoute><CategoryHome /></AdminPrivateRoute>} />
       </Route>
     </Routes>
     </>

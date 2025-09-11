@@ -72,10 +72,10 @@ export default function Sidenav({ open }) {
 
   const menuItems = [
     { text: 'Dashboard', icon: <DashboardIcon />, link: '/dashboard' },
-    { text: 'Categories', icon: <CategoryIcon />, link: '/categories' },
-    { text: 'Products', icon: <ShoppingCartIcon />, link: '/products' },
-    { text: 'Orders', icon: <ReceiptIcon />, link: '/orders' },
-    { text: 'Users', icon: <PeopleIcon />, link: '/users' },
+    { text: 'Categories', icon: <CategoryIcon />, link: '/dashboard/categories' },
+    { text: 'Products', icon: <ShoppingCartIcon />, link: '/dashboard/products' },
+    { text: 'Orders', icon: <ReceiptIcon />, link: '/dashboard/orders' },
+    { text: 'Users', icon: <PeopleIcon />, link: '/dashboard/users' },
   ]
 
   return (
