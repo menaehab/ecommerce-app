@@ -2,26 +2,13 @@ import apiAdmin from '../../../api/apiAdmin';
 import { login, logout, setError } from './AdminAuthSlice';
 
 // Login admin
-export const loginAdmin = (userData) => async (dispatch) => {
+export const loginAdmin = (adminData) => async (dispatch) => {
   try {
-    console.log('Sending admin login request with data:', userData);
-    const response = await apiAdmin.post('/login', userData);
-    console.log('Admin login response:', response.data);
-    
-    if (response.data && response.data.data) {
-      const { user, token } = response.data.data;
-      dispatch(login({ admin: user, adminToken: token }));
-      return { success: true };
-    }
-    
-    throw new Error('Invalid response format from server');
+    const { data } = await apiAdmin.post('/login', adminData);
+    dispatch(login({ admin: data.data.user, adminToken: data.data.token }));
+    return { success: true };
   } catch (error) {
-    console.error('Admin login error:', error);
-    const payload = error?.response?.data?.errors || 
-                  error?.response?.data?.message || 
-                  error.message;
-    dispatch(setError(payload));
-    return { success: false, error: payload };
+    return handleError(error, dispatch);
   }
 };
 
@@ -31,16 +18,22 @@ export const logoutAdmin = () => async (dispatch, getState) => {
     const { adminToken } = getState().adminAuth;
     if (adminToken) {
       await apiAdmin.post('/logout', {}, {
-        headers: {
-          'Authorization': `Bearer ${adminToken}`,
-          'Accept': 'application/json',
-        }
+        headers: { Authorization: `Bearer ${adminToken}` }
       });
     }
-    dispatch(logout());
   } catch (error) {
-    dispatch(logout()); 
-    const payload = error?.response?.data?.errors || error.message;
-    dispatch(setError(payload));
+    handleError(error, dispatch);
+  } finally {
+    dispatch(logout());
   }
+};
+
+
+// Helper to handle errors
+const handleError = (error, dispatch) => {
+  const payload = error?.response?.data?.errors ||
+                  error?.response?.data?.message ||
+                  error.message;
+  dispatch(setError(payload));
+  return { success: false, error: payload };
 };
