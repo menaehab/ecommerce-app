@@ -2,6 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   categories: [],
+  pagination: {
+    total: 0,
+    per_page: 10,
+    current_page: 1,
+    last_page: 1,
+  },
   error: null,
 };
 
@@ -13,7 +19,8 @@ const categorySlice = createSlice({
       state.categories.push(action.payload);
     },
     setCategory: (state, action) => {
-      state.categories = action.payload;
+      state.categories = action.payload.data || [];
+      state.pagination = action.payload.pagination;
     },
     updateCategory: (state, action) => {
       state.categories = state.categories.map((category) =>

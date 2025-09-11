@@ -11,6 +11,8 @@ import Stack from "@mui/material/Stack";
 import DeleteModal from "../../../components/DeleteModal";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategoriesThunk } from "../../../features/dashboard/categories/AdminCategoryThunk";
+import { Link as RouterLink } from "react-router-dom";
+import TablePagination from "@mui/material/TablePagination";
 
 const columns = [
   { id: "index", label: "#", minWidth: 50, align: "left" },
@@ -28,6 +30,11 @@ export default function CategoryHome() {
   const [selectedCategory, setSelectedCategory] = React.useState(null);
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.category.categories);
+  const pagination = useSelector((state) => state.category.pagination);
+
+  const handleChangePage = (event, newPage) => {
+    dispatch(fetchCategoriesThunk(newPage + 1));
+  };
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +64,7 @@ export default function CategoryHome() {
       />
 
       <h1 className="text-5xl mb-10 text-center font-bold">Categories</h1>
-      <Button sx={{ mb: 2 }} variant="contained">
+      <Button to="create" component={RouterLink} sx={{ mb: 2 }} variant="contained">
         Add Category
       </Button>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -132,6 +139,15 @@ export default function CategoryHome() {
             </TableBody>
           </Table>
         </TableContainer>
+
+        <TablePagination
+          component="div"
+          count={pagination.total}
+          page={pagination.current_page - 1}
+          onPageChange={handleChangePage}
+          rowsPerPage={pagination.per_page}
+          rowsPerPageOptions={[pagination.per_page]}
+        />
       </Paper>
     </>
   );

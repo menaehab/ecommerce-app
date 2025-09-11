@@ -1,10 +1,10 @@
 import apiAdmin from '../../../api/apiAdmin';
 import { createCategory, setCategory, updateCategory, deleteCategory, setError } from './AdminCategorySlice';
 
-export const fetchCategoriesThunk = () => async (dispatch) => {
+export const fetchCategoriesThunk = (page = 1) => async (dispatch) => {
   try {
-    const { data } = await apiAdmin.get('/categories');
-    dispatch(setCategory(data.data));
+    const { data } = await apiAdmin.get(`/categories?page=${page}`);
+    dispatch(setCategory(data));
     return { success: true };
   } catch (error) {
     return handleError(error, dispatch);
