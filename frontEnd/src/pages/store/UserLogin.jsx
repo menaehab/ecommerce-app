@@ -44,7 +44,16 @@ export default function UserLogin() {
     e.preventDefault();
     setLoading(true);
     dispatch(setError(null));
-    
+    if (!formData.email.includes("@")) {
+      dispatch(setError({ email: "Email must be a valid email address" }));
+      setLoading(false);
+      return;
+    }
+    if (formData.password.length < 8) {
+      dispatch(setError({ password: "Password must be at least 8 characters" }));
+      setLoading(false);
+      return;
+    }
     const result = await dispatch(loginUser(formData));
     if (result?.success) {
       navigate("/");
