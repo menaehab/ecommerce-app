@@ -138,7 +138,7 @@ export default function Register() {
                   onChange={handleChange}
                   name="name"
                   error={!!errors?.name}
-                  helperText={errors?.name ? errors?.name[0] : ""}
+                  helperText={errors?.name}
                 />
                 <TextField
                   label="Email"
@@ -158,7 +158,7 @@ export default function Register() {
                   onChange={handleChange}
                   name="email"
                   error={!!errors?.email}
-                  helperText={errors?.email ? errors?.email[0] : ""}
+                  helperText={errors?.email}
                 />
                 <TextField
                   label="Password"
@@ -178,7 +178,7 @@ export default function Register() {
                   onChange={handleChange}
                   name="password"
                   error={!!errors?.password}
-                  helperText={errors?.password ? errors?.password[0] : ""}
+                  helperText={errors?.password}
                 />
                 <TextField
                   label="Confirm Password"
@@ -198,7 +198,7 @@ export default function Register() {
                   onChange={handleChange}
                   name="password_confirmation"
                   error={!!errors?.password_confirmation}
-                  helperText={errors?.password_confirmation ? errors?.password_confirmation[0] : ""}
+                  helperText={errors?.password_confirmation}
                 />
                 <Button 
                   type="submit" 

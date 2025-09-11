@@ -41,9 +41,7 @@ export const logoutUser = () => async (dispatch, getState) => {
 
 // Helper to handle errors
 const handleError = (error, dispatch) => {
-  const payload = error?.response?.data?.errors || 
-                  error?.response?.data?.message || 
-                  error.message;
+  const payload = error?.response?.data?.errors;
   dispatch(setError(payload));
   return { success: false, error: payload };
 };

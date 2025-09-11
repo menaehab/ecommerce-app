@@ -2,15 +2,15 @@ import * as React from 'react'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
-import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import MenuItem from '@mui/material/MenuItem'
 import Menu from '@mui/material/Menu'
-import MenuIcon from '@mui/icons-material/Menu'
 import Button from '@mui/material/Button'
 import { logoutAdmin } from '../../features/dashboard/auth/AdminAuthThunk'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
 
 export default function Navbar({ onMenuClick }) {
   const dispatch = useDispatch();
@@ -48,7 +48,7 @@ export default function Navbar({ onMenuClick }) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'white',color: 'black' }}
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'white', color: 'black' }}
       >
         <Toolbar>
           <IconButton
@@ -67,9 +67,9 @@ export default function Navbar({ onMenuClick }) {
             variant="h6"
             noWrap
             component="div"
-            sx={{ flexGrow: 1,fontWeight: 'bold' }}
+            sx={{ flexGrow: 1, fontWeight: 'bold' }}
           >
-            Tech 
+            Tech
           </Typography>
           <Button
             onClick={handleLogout}

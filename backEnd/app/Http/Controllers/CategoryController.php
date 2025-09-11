@@ -17,7 +17,15 @@ class CategoryController extends Controller
         $categories = Category::paginate(10);
         return response()->json([
             'success' => true,
-            'data' => CategoryResource::collection($categories)
+            'data' => CategoryResource::collection($categories),
+            'pagination' => [
+                'total' => $categories->total(),
+                'per_page' => $categories->perPage(),
+                'current_page' => $categories->currentPage(),
+                'last_page' => $categories->lastPage(),
+                'from' => $categories->firstItem(),
+                'to' => $categories->lastItem(),
+            ]
         ], 200);
     }
 
@@ -67,7 +75,7 @@ class CategoryController extends Controller
         $category->delete();
         return response()->json([
             'success' => true,
-            'message' => 'Category deleted successfully',
+            'data' => new CategoryResource($category),
         ], 200);
     }
 }

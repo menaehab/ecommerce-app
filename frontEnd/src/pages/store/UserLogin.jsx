@@ -104,7 +104,7 @@ export default function UserLogin() {
                   value={formData.email}
                   onChange={handleChange}
                   error={!!errors?.email}
-                  helperText={errors?.email ? errors?.email[0] : ""}
+                  helperText={errors?.email}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       borderRadius: "12px",
@@ -124,7 +124,7 @@ export default function UserLogin() {
                   value={formData.password}
                   onChange={handleChange}
                   error={!!errors?.password}
-                  helperText={errors?.password ? errors?.password[0] : ""}
+                  helperText={errors?.password}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       borderRadius: "12px",
