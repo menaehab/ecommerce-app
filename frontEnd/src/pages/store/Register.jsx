@@ -45,6 +45,46 @@ export default function Register() {
     e.preventDefault();
     setLoading(true);
     dispatch(setError(null));
+    if (formData.password !== formData.password_confirmation) {
+      dispatch(setError({ password_confirmation: "Passwords do not match" }));
+      setLoading(false);
+      return;
+    }
+    if (formData.password.length < 8) {
+      dispatch(setError({ password: "Password must be at least 8 characters" }));
+      setLoading(false);
+      return;
+    }
+    if (!formData.email.includes("@")) {
+      dispatch(setError({ email: "Email must be a valid email address" }));
+      setLoading(false);
+      return;
+    }
+    if (formData.name.length < 3) {
+      dispatch(setError({ name: "Name must be at least 3 characters" }));
+      setLoading(false);
+      return;
+    }
+    if (formData.name.length > 255) {
+      dispatch(setError({ name: "Name must be at most 255 characters" }));
+      setLoading(false);
+      return;
+    }
+    if (formData.email.length > 255) {
+      dispatch(setError({ email: "Email must be at most 255 characters" }));
+      setLoading(false);
+      return;
+    }
+    if (formData.password.length > 255) {
+      dispatch(setError({ password: "Password must be at most 255 characters" }));
+      setLoading(false);
+      return;
+    }
+    if (formData.password_confirmation.length > 255) {
+      dispatch(setError({ password_confirmation: "Password confirmation must be at most 255 characters" }));
+      setLoading(false);
+      return;
+    }
     await dispatch(registerUser(formData));
     setLoading(false);
   };

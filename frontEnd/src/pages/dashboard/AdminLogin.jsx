@@ -42,17 +42,22 @@ export default function AdminLogin() {
     e.preventDefault();
     setLoading(true);
     dispatch(setError(null));
-    
-    try {
-      const result = await dispatch(loginAdmin(formData));
-      if (result?.success) {
-        navigate("/dashboard");
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-    } finally {
+    if (!formData.email.includes("@")) {
+      dispatch(setError({ email: "Email must be a valid email address" }));
       setLoading(false);
+      return;
     }
+    if (formData.password.length < 8) {
+      dispatch(setError({ password: "Password must be at least 8 characters" }));
+      setLoading(false);
+      return;
+    }
+    const result = await dispatch(loginAdmin(formData));
+    if (result?.success) {
+      navigate("/dashboard");
+    }
+    setLoading(false);
+
   };
 
   return (
