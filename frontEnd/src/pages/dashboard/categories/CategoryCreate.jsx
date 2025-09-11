@@ -24,6 +24,7 @@ export default function CategoryCreate() {
     const response = await dispatch(createCategoryThunk({ name }));
     if (response?.success) {
       setLoading(false);
+      dispatch(setError(null));
       navigate("/dashboard/categories");
     }
     setLoading(false);

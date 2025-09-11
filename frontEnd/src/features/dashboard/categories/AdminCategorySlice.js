@@ -39,6 +39,10 @@ const categorySlice = createSlice({
       state.categories = state.categories.filter(
         (category) => category.slug !== action.payload.slug
       );
+      // Update the total count
+      if (state.pagination) {
+        state.pagination.total = Math.max(0, (state.pagination.total || 0) - 1);
+      }
     },
     setError: (state, action) => {
       state.error = action.payload;

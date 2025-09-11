@@ -38,8 +38,18 @@ export default function CategoryHome() {
     dispatch(fetchCategoriesThunk(newPage + 1));
   };
 
-  const handleDelete = (categoryData) => {
-    dispatch(deleteCategoryThunk(categoryData));
+  const handleDelete = async (categoryData) => {
+    const resultAction = await dispatch(deleteCategoryThunk(categoryData));
+    if (deleteCategoryThunk.fulfilled.match(resultAction)) {
+      const currentPage = pagination?.current_page || 1;
+      const pageToFetch = 
+        currentPage === 1 || 
+        (pagination?.total - 1) > (pagination?.per_page * (currentPage - 1))
+          ? currentPage 
+          : Math.max(1, currentPage - 1);
+      
+      await dispatch(fetchCategoriesThunk(pageToFetch));
+    }
   };
 
   React.useEffect(() => {
