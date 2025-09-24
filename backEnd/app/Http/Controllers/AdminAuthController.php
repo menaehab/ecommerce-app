@@ -32,7 +32,8 @@ class AdminAuthController extends Controller
             'message' => 'Admin logged in successfully',
             'data' => new AuthResource([
                 'user' => $data['user'],
-                'token' => $data['token']
+                'token' => $data['token'],
+                'role' => 'admin',
             ])
         ], 200);
     }

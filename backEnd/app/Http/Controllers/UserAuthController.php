@@ -27,7 +27,8 @@ class UserAuthController extends Controller
             'message' => 'User registered successfully',
             'data' => new AuthResource([
                 'user' => $data['user'],
-                'token' => $data['token']
+                'token' => $data['token'],
+                'role' => 'user',
             ])
         ], 201);
     }
@@ -48,7 +49,8 @@ class UserAuthController extends Controller
             'message' => 'User logged in successfully',
             'data' => new AuthResource([
                 'user' => $data['user'],
-                'token' => $data['token']
+                'token' => $data['token'],
+                'role' => 'user',
             ])
         ], 200);
     }

@@ -31,6 +31,8 @@ export default function UserLogin() {
     password: "",
   });
 
+  const [loading, setLoading] = React.useState(false);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -38,7 +40,6 @@ export default function UserLogin() {
     });
   };
 
-  const [loading, setLoading] = React.useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
