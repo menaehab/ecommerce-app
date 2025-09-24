@@ -5,12 +5,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Resources\UserResource;
 
 /**
  * Auth Routes
  */
+
 Route::get('/user', function (Request $request) {
-    return $request->user();
+    return new UserResource($request->user());
 })->middleware('auth:sanctum');
 
 /**
@@ -26,6 +28,6 @@ Route::post('/logout', [UserAuthController::class, 'logout'])->middleware('auth:
 
 Route::prefix('admin')->group(function () {
     Route::post('/login', [AdminAuthController::class, 'login']);
-    Route::post('/logout', [AdminAuthController::class, 'logout'])->middleware('auth:sanctum');
+    Route::post('/logout', [AdminAuthController::class, 'logout'])->middleware('auth:sanctum,EnsureIsAdmin');
     Route::apiResource('categories', CategoryController::class);
 });

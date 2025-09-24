@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Application;
 use App\Http\Middleware\ApiExceptionHandler;
+use App\Http\Middleware\EnsureIsAdmin;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
@@ -14,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->api(ApiExceptionHandler::class);
+        $middleware->alias(['EnsureIsAdmin' => EnsureIsAdmin::class]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

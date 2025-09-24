@@ -49,7 +49,7 @@ class AuthService
 
     public function logout(bool $allDevices = false)
     {
-        $user = auth()->user();
+        $user = auth()->guard($this->guard)->user();
         if (!$user) {
             return;
         }

@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AuthResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,14 +14,16 @@ class AuthResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $role = 'user';
+        if ($this->resource instanceof \App\Models\Admin) {
+            $role = 'admin';
+        }
+
         return [
-            'user' => [
-                'name' => $this['user']->name,
-                'slug' => $this['user']->slug,
-                'email' => $this['user']->email,
-                'role' => $this['role'],
-            ],
-            'token' => $this['token'],
+            "name" => $this->name,
+            "slug" => $this->slug,
+            "email" => $this->email,
+            "role" => $role
         ];
     }
 }
