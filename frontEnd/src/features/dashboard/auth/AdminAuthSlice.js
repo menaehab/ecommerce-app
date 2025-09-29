@@ -41,11 +41,16 @@ const authSlice = createSlice({
             Cookies.remove("admin");
             Cookies.remove("admin-token");
         },
+        setAdmin: (state, action) => {
+            state.admin = action.payload.admin;
+            state.error = null;
+            Cookies.set("admin", JSON.stringify(action.payload.admin));
+        },
         setError: (state, action) => {
             state.error = action.payload;
         },
     },
 });
 
-export const { register, login, logout, setError } = authSlice.actions;
+export const { register, login, logout, setError, setAdmin } = authSlice.actions;
 export default authSlice.reducer;

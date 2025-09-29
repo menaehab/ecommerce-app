@@ -11,9 +11,25 @@ use App\Http\Resources\UserResource;
  * Auth Routes
  */
 
+// Unified /user endpoint that works with both guards
 Route::get('/user', function (Request $request) {
-    return new UserResource($request->user());
-})->middleware('auth:sanctum');
+    $user = $request->user();
+    
+    if (!$user) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Unauthenticated.',
+        ], 401);
+    }
+
+    return response()->json([
+        'success' => true,
+        'data' => [
+            'user' => new UserResource($user),
+            'guard' => $request->attributes->get('guard', 'web'),
+        ],
+    ], 200);
+})->middleware('auth.multi');
 
 /**
  * User Routes

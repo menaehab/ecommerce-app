@@ -2,7 +2,8 @@ import { configureStore } from '@reduxjs/toolkit'
 import userAuthReducer from '../features/store/auth/UserAuthSlice'
 import adminAuthReducer from '../features/dashboard/auth/AdminAuthSlice'
 import categoryReducer from '../features/dashboard/categories/AdminCategorySlice'
-import { injectStore } from '../api/apiUser';
+import { injectStore as injectUserStore } from '../api/apiUser';
+import { injectStore as injectAdminStore } from '../api/apiAdmin';
 
 const store = configureStore({
   reducer: {
@@ -12,7 +13,8 @@ const store = configureStore({
   },
 })
 
-// Inject the store into the API configuration
-injectStore(store);
+// Inject the store into both API configurations
+injectUserStore(store);
+injectAdminStore(store);
 
 export { store };

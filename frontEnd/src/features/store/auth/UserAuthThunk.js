@@ -1,5 +1,5 @@
 import apiUser from '../../../api/apiUser';
-import { register, login, logout, setError } from './UserAuthSlice';
+import { register, login, logout, setError, setUser } from './UserAuthSlice';
 
 // Register user
 export const registerUser = (userData) => async (dispatch) => {
@@ -36,6 +36,17 @@ export const logoutUser = () => async (dispatch, getState) => {
     handleError(error, dispatch);
   } finally {
     dispatch(logout());
+  }
+};
+
+// Get user
+export const getUser = () => async (dispatch) => {
+  try {
+    const { data } = await apiUser.get('/user');
+    dispatch(setUser({ user: data.data }));
+    return { success: true };
+  } catch (error) {
+    return handleError(error, dispatch);
   }
 };
 
